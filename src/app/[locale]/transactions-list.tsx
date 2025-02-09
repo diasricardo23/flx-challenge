@@ -4,12 +4,11 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { transactionQueryOptions } from "@/queries/transaction";
 import TransactionCard from "@/components/transactions/card";
-import TransactionDialog from "./transaction-dialog";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button"
 import { useI18n } from "@/locales/client";
 import Pagination from "@/components/pagination";
 import { Input } from "@/components/ui/input";
+import TransactionDetailsDialog from "@/components/transactions/details-dialog";
 
 const ITEMS_PER_PAGE = 5;
 const PAGE = 1;
@@ -77,7 +76,7 @@ export default function TransactionsList() {
         </>
       )}
       {selectedTransactionId && (
-        <TransactionDialog transactionId={selectedTransactionId} onClose={() => {}} />
+        <TransactionDetailsDialog transactionId={selectedTransactionId} onChangeVisible={() => setSelectedTransactionId(null)} open={!!selectedTransactionId} />
       )}
     </div>
   );
