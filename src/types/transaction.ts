@@ -10,3 +10,6 @@ export type TransactionType = {
   payment_method: 'CASH_PICKUP' | 'BANK_DEPOSIT' | 'MOBILE_WALLET';
   date: string;
 }
+
+export type TransactionStatus = TransactionType['status'];
+export type TransactionPaymentMethod = TransactionType['payment_method'];

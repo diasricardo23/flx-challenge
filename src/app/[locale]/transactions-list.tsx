@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { transactionQueryOptions } from "@/queries/transaction";
+import TransactionCard from "@/components/transactions/card";
 import TransactionDialog from "./transaction-dialog";
-import { useState } from "react";
 
 export default function TransactionsList() {
   const { data, error, isLoading } = useQuery(transactionQueryOptions());
@@ -17,12 +18,9 @@ export default function TransactionsList() {
 
   return (
     <div>
-      <h1>Transactions</h1>
-      <ul>
-        {data.map((transaction) => (
-          <li key={transaction.transaction_id} onClick={() => setSelectedTransactionId(transaction.transaction_id)}>{transaction.receiver_whatsapp} - ${transaction.amount_received}</li>
-        ))}
-      </ul>
+      {data.map((transaction) => (
+        <TransactionCard key={transaction.transaction_id} transaction={transaction} onOpen={() => setSelectedTransactionId(transaction.transaction_id)} />
+      ))}
       {selectedTransactionId && (
         <TransactionDialog transactionId={selectedTransactionId} onClose={() => {}} />
       )}
