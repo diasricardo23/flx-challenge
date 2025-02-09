@@ -2,10 +2,13 @@ import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query
 import { transactionQueryOptions } from "@/queries/transaction";
 import TransactionsList from "./transactions-list";
 
+const ITEMS_PER_PAGE = 5;
+const PAGE = 1;
+
 export default async function Home() {
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(transactionQueryOptions());
+  await queryClient.prefetchQuery(transactionQueryOptions(PAGE, ITEMS_PER_PAGE, { status: null }));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
