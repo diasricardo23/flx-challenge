@@ -13,7 +13,9 @@ export default {
       payment_method: 'Payment Method'
     },
     placeholder: {
-      search: 'Search by Transaction ID or Sender/Receiver WhatsApp'
+      search: 'Search by Transaction ID or Sender/Receiver WhatsApp',
+      filter_by_status: 'Filter by Status',
+      filter_by_payment_method: 'Filter by Payment Method',
     },
     message: {
       no_transactions: 'No transactions found',

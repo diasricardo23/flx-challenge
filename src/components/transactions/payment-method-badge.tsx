@@ -20,7 +20,7 @@ export default function TransactionPaymentMethodBadge({ status }: { status: Tran
   const bagdeInfo = getBadgeInfoByPaymentMethod(status);
 
   return (
-    <span className={`${bagdeInfo.bgColor} text-white rounded-xl px-4 py-1 text-xs font-bold mr-2`}>
+    <span className={`${bagdeInfo.bgColor} text-white rounded-xl px-4 py-1 text-xs font-bold`}>
       {bagdeInfo.messsage && t(`transaction.payment_method.${bagdeInfo.messsage}`)}
     </span>
   );

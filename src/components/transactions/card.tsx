@@ -11,17 +11,19 @@ export default function TransactionCard({ transaction, onOpen }: { transaction: 
 
   return (
     <div className="bg-gray-200 mb-4 rounded-md p-4 grid grid-cols-12">
-      <div className="col-span-12 sm:col-span-6">
+      <div className="col-span-6">
         <h2 className="font-bold">{`${t('transaction.label.transaction_id', { id: transaction.transaction_id})}`}</h2>
       </div>
-      <div className="col-span-12 sm:col-span-6 flex sm:justify-end">
-        <div>
+      <div className="col-span-6 flex flex-col sm:flex-row sm:justify-end items-end">
+        <div className="mb-1 sm:mr-2 sm:mb-0">
           <TransactionPaymentMethodBadge status={transaction.payment_method} />
+        </div>
+        <div>
           <TransactionStatusBadge status={transaction.status} />
         </div>
       </div>
-      <div className="col-span-12 md:my-5">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="col-span-12 my-2 md:my-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4">
           <div>
             <p className="font-bold">{`${t('transaction.label.sender')} (${transaction.sender_whatsapp})`}</p>
             <p>{t('transaction.label.amount_sent', { amount: currencyFormatter(transaction.amount_sent, 'USD')})}</p>

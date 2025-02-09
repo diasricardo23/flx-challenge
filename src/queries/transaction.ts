@@ -5,7 +5,15 @@ import { queryOptions } from "@tanstack/react-query"
 
 const queryBasePath = '/transaction'
 
-const transactionQueryOptions = (page: number, limit: number, filters: any) => {
+export interface TransactionFilters {
+  status: string;
+  search: string;
+  paymentMethod: string;
+  startDate: string | undefined;
+  endDate: string | undefined;
+}
+
+const transactionQueryOptions = (page: number, limit: number, filters: TransactionFilters) => {
   return queryOptions({
     queryKey: ['transactions', { page, limit, filters }],
     queryFn: async () => {
@@ -21,6 +29,22 @@ const transactionQueryOptions = (page: number, limit: number, filters: any) => {
           if (filters.search) {
             transactions = transactions.filter((transaction: TransactionType) => {
               return transaction.sender_whatsapp.includes(filters.search) || transaction.receiver_whatsapp.includes(filters.search) || transaction.transaction_id.includes(filters.search);
+            });
+          }
+
+          if (filters.paymentMethod) {
+            transactions = transactions.filter((transaction: TransactionType) => transaction.payment_method === filters.paymentMethod);
+          }
+
+          if (filters.startDate) {
+            transactions = transactions.filter((transaction: TransactionType) => {
+              return new Date(transaction.date) >= new Date(filters.startDate as string);
+            });
+          }
+
+          if (filters.endDate) {
+            transactions = transactions.filter((transaction: TransactionType) => {
+              return new Date(transaction.date) <= new Date(filters.endDate as string);
             });
           }
         }

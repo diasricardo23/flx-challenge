@@ -38,32 +38,32 @@ export default function TransactionDetailsDialog({ transactionId, onChangeVisibl
           {isLoading && <p>{t('common.message.loading')}</p>}
           {error && <p>{t('transaction.message.error_fetching_transaction_details')}</p>}
           {data && (
-            <div className="grid grid-cols-4 gap-x-1 gap-y-4">
-            <div className="col-span-2">
-              <p className="font-bold">{t('transaction.label.sender')}</p>
-              <p>{`${t('common.label.whatsapp')}: ${data.sender_whatsapp}`}</p>
-              <p>{t('transaction.label.amount_sent', { amount: currencyFormatter(data.amount_sent, 'USD')})}</p>
-            </div>
-            <div className="col-span-2">
-            <p className="font-bold">{t('transaction.label.receiver')}</p>
-            <p>{`${t('common.label.whatsapp')}: ${data.receiver_whatsapp}`}</p>
-            <p>{t('transaction.label.amount_received', { amount: currencyFormatter(data.amount_received, 'MXN')})}</p>
-            </div>
-            <div>
-            <p className="font-bold">{t('transaction.label.status')}</p>
-              <TransactionStatusBadge status={data.status} />
-            </div>
-            <div>
-            <p className="font-bold">{t('transaction.label.payment_method')}</p>
-              <TransactionPaymentMethodBadge status={data.payment_method} />
-            </div>
-            <div className="col-span-2">
-              <p className="font-bold">{t('transaction.label.exchange_rate')}</p>
-              <p>{data.exchange_rate}</p>
-            </div>
-            <div className="col-span-2">
-              <span className="text-sm font-light italic">{t('transaction.label.transfered_on', { date: dayjs(data.date).format('DD MMM YY HH:mm:ss') })}</span>
-            </div>
+            <div className="grid grid-cols-4 gap-x-2 gap-y-4">
+              <div className="col-span-4 sm:col-span-2 order-1">
+                <p className="font-bold">{t('transaction.label.sender')}</p>
+                <p>{`${t('common.label.whatsapp')}: ${data.sender_whatsapp}`}</p>
+                <p>{t('transaction.label.amount_sent', { amount: currencyFormatter(data.amount_sent, 'USD')})}</p>
+              </div>
+              <div className="col-span-4 sm:col-span-2 order-2">
+                <p className="font-bold">{t('transaction.label.receiver')}</p>
+                <p>{`${t('common.label.whatsapp')}: ${data.receiver_whatsapp}`}</p>
+                <p>{t('transaction.label.amount_received', { amount: currencyFormatter(data.amount_received, 'MXN')})}</p>
+              </div>
+              <div className="col-span-2 sm:col-span-1 order-4 sm:order-3">
+                <p className="font-bold">{t('transaction.label.status')}</p>
+                <TransactionStatusBadge status={data.status} />
+              </div>
+              <div className="col-span-2 sm:col-span-1 order-5 sm:order-4">
+                <p className="font-bold">{t('transaction.label.payment_method')}</p>
+                <TransactionPaymentMethodBadge status={data.payment_method} />
+              </div>
+              <div className="col-span-4 sm:col-span-2 order-3 sm:order-5">
+                <p className="font-bold">{t('transaction.label.exchange_rate')}</p>
+                <p>{data.exchange_rate}</p>
+              </div>
+              <div className="col-span-4 order-6">
+                <span className="text-sm font-light italic">{t('transaction.label.transfered_on', { date: dayjs(data.date).format('DD MMM YY HH:mm:ss') })}</span>
+              </div>
           </div>
           )}
           

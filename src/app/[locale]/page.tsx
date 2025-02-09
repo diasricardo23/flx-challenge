@@ -8,7 +8,7 @@ const PAGE = 1;
 export default async function Home() {
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(transactionQueryOptions(PAGE, ITEMS_PER_PAGE, { status: null }));
+  await queryClient.prefetchQuery(transactionQueryOptions(PAGE, ITEMS_PER_PAGE, { status: '', search: '', paymentMethod: '', startDate: '', endDate: '' }));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
