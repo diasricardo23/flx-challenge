@@ -6,7 +6,7 @@ const defaultLocale = "es";
 
 const I18nMiddleware = createI18nMiddleware({
   locales,
-  defaultLocale
+  defaultLocale: process.env.NEXT_PUBLIC_DEFAULT_LOCALE || defaultLocale,
 });
  
 export function middleware(request: NextRequest) {
