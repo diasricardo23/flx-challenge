@@ -1,6 +1,9 @@
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 import { transactionQueryOptions } from "@/queries/transaction";
+
 import TransactionsList from "./transactions-list";
+import SwitchLocale from "@/components/switch";
+
 
 const ITEMS_PER_PAGE = 5;
 const PAGE = 1;
@@ -12,10 +15,12 @@ export default async function Home() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <header>
-        <h1>Transactions</h1>
+      <header className="flex items-end justify-end p-2">
+        <div className="w-[150px]">
+          <SwitchLocale />
+        </div>
       </header>
-      <div className="p-5 md:p-20">
+      <div className="p-5 md:px-20">
         <TransactionsList />  
       </div>  
     </HydrationBoundary>

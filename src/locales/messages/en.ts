@@ -49,6 +49,10 @@ export default {
     },
     message: {
       loading: 'Loading...'
+    },
+    locale: {
+      en: '🇺🇸  English',
+      es: '🇪🇸  Spanish'
     }
   }
 } as const
