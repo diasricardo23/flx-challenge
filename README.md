@@ -1,4 +1,4 @@
-# 🚀 Financial Transactions Manager
+# 🚀 Getting Started
 
 A **Next.js 15** application built for managing financial transactions, featuring **ShadCN/UI** for a modern UI, **TanStack Query + Axios** for efficient data fetching, and **MockAPI** for simulating backend responses. The app is styled with **Tailwind CSS** and uses **pnpm** as the package manager.
 
