@@ -37,14 +37,14 @@ export default function Pagination({ page, total, pageSize, pageSizeOptions, han
   }
 
   return (
-    <div className="grid grid-cols-12 gap-2">
-      <Button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>{t('common.button.previous')}</Button>
-      <div className="flex items-center justify-center">
+    <div className="grid grid-cols-4 sm:grid-cols-12 gap-2">
+      <Button className="sm:col-span-2 xl:col-span-1" onClick={() => handlePageChange(page - 1)} disabled={page === 1}>{t('common.button.previous')}</Button>
+      <div className="flex items-center justify-center sm:col-span-2 xl:col-span-1">
         <Input className="w-[45px] mr-2" value={page} onChange={(e) => onHandleManualPageChange(parseInt(e.target.value))} />
         <p className="">{`/ ${total_pages}`}</p>
       </div>
-      <Button onClick={() => handlePageChange(page + 1)} disabled={page === total_pages || total_pages === 0}>{t('common.button.next')}</Button>
-      <div className="col-start-12 col-end-13">
+      <Button className="sm:col-span-2 xl:col-span-1" onClick={() => handlePageChange(page + 1)} disabled={page === total_pages || total_pages === 0}>{t('common.button.next')}</Button>
+      <div className="sm:col-span-6 md:col-span-2 md:col-start-12 md:col-end-13">
         {pageSizeOptionsParsed.length > 0 && 
           <Select onValueChange={(value) => onHandlePageSizeChange(value)} value={pageSize.toString()}>
             <SelectTrigger>
