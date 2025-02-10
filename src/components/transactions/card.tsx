@@ -10,7 +10,7 @@ export default function TransactionCard({ transaction, onOpen }: { transaction: 
   const t = useI18n();
 
   return (
-    <div className="bg-gray-200 mb-4 rounded-md p-4 grid grid-cols-12">
+    <div className="bg-gray-200 hover:bg-gray-300 mb-4 rounded-md p-4 grid grid-cols-12 cursor-pointer" onClick={onOpen}>
       <div className="col-span-6">
         <h2 className="font-bold">{`${t('transaction.label.transaction_id', { id: transaction.transaction_id})}`}</h2>
       </div>

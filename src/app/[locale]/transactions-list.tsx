@@ -11,8 +11,9 @@ import { Input } from "@/components/ui/input";
 import TransactionDetailsDialog from "@/components/transactions/details-dialog";
 import { DatePickerWithRange } from "@/components/datepicker";
 import { DateRange } from "react-day-picker";
+import { Button } from "@/components/ui/button";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 4;
 const PAGE = 1;
 
 export default function TransactionsList() {
@@ -27,10 +28,15 @@ export default function TransactionsList() {
     endDate: ''
   });
   const [page, setPage] = useState(PAGE);
+  const [pageSize, setPageSize] = useState(ITEMS_PER_PAGE);
   const [search, setSearch] = useState('');
   const [date, setDate] = useState<DateRange | undefined>();
 
-  const { data, error, isLoading } = useQuery(transactionQueryOptions(page, ITEMS_PER_PAGE, filters));
+  const queryOptions = transactionQueryOptions(page, pageSize, filters);
+  const { data, error, isLoading, isFetching } = useQuery({
+    ...queryOptions,
+    placeholderData: (prev) => prev || { records: [], total: 0, page: PAGE, per_page: ITEMS_PER_PAGE, total_pages: 0 }
+  });
 
   const statusOptions = [
     { value: "COMPLETED", label: t('transaction.status.completed') },
@@ -45,6 +51,19 @@ export default function TransactionsList() {
     { value: "CASH_PICKUP", label: t('transaction.payment_method.cash_pickup') },
   ];
 
+  const cleanFilters = () => {
+    setFilters({
+      status: '',
+      search: '',
+      paymentMethod: '',
+      startDate: '',
+      endDate: ''
+    });
+    setPage(PAGE);
+    setSearch('');
+    setDate(undefined);
+  }
+
   const onSelectStatusChange = (value: string) => {
     setFilters({ ...filters, status: value });
     setPage(PAGE);
@@ -52,6 +71,11 @@ export default function TransactionsList() {
 
   const onSelectPaymentMethodChange = (value: string) => {
     setFilters({ ...filters, paymentMethod: value });
+    setPage(PAGE);
+  }
+
+  const onSelectPageSizeChange = (value: number) => {
+    setPageSize(value);
     setPage(PAGE);
   }
 
@@ -76,8 +100,13 @@ export default function TransactionsList() {
   return (
     <div>
       <div className="mb-4">
-        <div className="mb-2">
-          <Input className="sm:w-[500px]" placeholder={t('transaction.placeholder.search')} value={search} onChange={(e) => onDebounceSearchChange(e.target.value)} />
+        <div className="grid grid-cols-2 gap-2 mb-2">
+          <div className="col-span-2 sm:col-span-1 order-2 sm:order-1">
+            <Input className="sm:w-[450px]" placeholder={t('transaction.placeholder.search')} value={search} onChange={(e) => onDebounceSearchChange(e.target.value)} />
+          </div>
+          <div className="col-span-2 sm:col-span-1 flex justify-end order-1 sm:order-2">
+            <Button variant='outline' className="w-[100px]" onClick={cleanFilters}>{t('common.button.clear')}</Button>
+          </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           <div className="">
@@ -108,18 +137,18 @@ export default function TransactionsList() {
             <DatePickerWithRange onChangeDate={onDebounceDateChange} value={date} />
           </div>
         </div>
-        
       </div>
-      {isLoading && <p>{t('transaction.message.loading_transactions')}</p>}
-      {error && <p>{t('transaction.message.error_loading_transactions')}</p>}
+      {isFetching && <p className="mb-2">{t('transaction.message.loading_transactions')}</p>}
+      {isLoading && <p className="mb-2">{t('transaction.message.loading_transactions')}</p>}
+      {error && <p className="mb-2">{t('transaction.message.error_loading_transactions')}</p>}
       {data && (
         <>
-          {data.records.length === 0 && <p><p>{t('transaction.message.no_transactions')}</p></p>}
+          {data.records.length === 0 && <p className="mb-2">{t('transaction.message.no_transactions')}</p>}
           {data.records.map((transaction) => (
             <TransactionCard key={transaction.transaction_id} transaction={transaction} onOpen={() => setSelectedTransactionId(transaction.transaction_id)} />
           ))}
         <div>
-          <Pagination page={page} total={data.total} perPage={ITEMS_PER_PAGE} handlePageChange={setPage} />
+          <Pagination page={page} total={data.total} pageSize={pageSize} handlePageChange={setPage} handlePageSizeChange={onSelectPageSizeChange} pageSizeOptions={[4,10,15]} />
         </div>
         </>
       )}

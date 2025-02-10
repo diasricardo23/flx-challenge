@@ -41,11 +41,13 @@ export default {
       viewMore: 'View More',
       close: 'Close',
       next: 'Next',
-      previous: 'Previous'
+      previous: 'Previous',
+      clear: 'Clear',
     },
     label: {
       select: 'Select',
-      whatsapp: 'WhatsApp'
+      whatsapp: 'WhatsApp',
+      perPage: '{count} Per Page'
     },
     message: {
       loading: 'Loading...'
