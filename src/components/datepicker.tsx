@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { addDays, format } from "date-fns"
+import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 
@@ -22,7 +22,9 @@ export function DatePickerWithRange({
   const date = value
 
   const handleDateChange = (date: DateRange | undefined) => {
-    onChangeDate && onChangeDate(date)
+    if (typeof onChangeDate === "function") {
+      onChangeDate(date)
+    }
   }
 
   return (

@@ -1,11 +1,9 @@
-import { TransactionType } from "@/types/transaction";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { transactionDetailsQueryOptions } from "@/queries/transaction";
 import { useQuery } from "@tanstack/react-query";
